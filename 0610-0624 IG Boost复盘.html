@@ -1,0 +1,733 @@
+<html lang="zh"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO Markets | 0610-0624 IG Boost 投放复盘报告</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand:      '#26A347',
+        brandDark:  '#1A7A34',
+        brandLight: '#34C75A',
+        brandPale:  '#EAF6EC',
+        ink:        '#1A1D1A',
+        muted:      '#6B7280',
+        surface:    '#F8F9FA',
+        card:       '#FFFFFF',
+        border:     '#E5E7EB',
+      },
+      fontFamily: {
+        display: ['"DM Sans"','ui-sans-serif','system-ui'],
+        mono:    ['"JetBrains Mono"','monospace'],
+      }
+    }
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:#F8F9FA;
+  color:#1A1D1A;
+  font-family:'DM Sans',ui-sans-serif,system-ui;
+  line-height:1.65;
+  min-height:100vh;
+}
+
+/* subtle grid */
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(38,163,71,.04) 1px, transparent 1px),
+    linear-gradient(90deg,rgba(38,163,71,.04) 1px, transparent 1px);
+  background-size:52px 52px;
+  pointer-events:none; z-index:0;
+}
+
+/* top glow */
+body::after{
+  content:'';
+  position:fixed; top:-120px; left:50%; transform:translateX(-50%);
+  width:700px; height:300px;
+  background:radial-gradient(ellipse,rgba(38,163,71,.12) 0%,transparent 70%);
+  pointer-events:none; z-index:0;
+}
+
+/* ── Card ── */
+.card{
+  background:#FFFFFF;
+  border:1px solid #E5E7EB;
+  border-radius:16px;
+  box-shadow:0 1px 4px rgba(0,0,0,.05);
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(38,163,71,.12);
+}
+
+/* ── KPI Card ── */
+.kpi-card{
+  background:#FFFFFF;
+  border:1px solid #E5E7EB;
+  border-radius:14px;
+  padding:1.1rem 1rem;
+  transition:transform .22s ease, box-shadow .22s ease;
+  position:relative; overflow:hidden;
+}
+.kpi-card::before{
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,#26A347,#34C75A);
+  border-radius:14px 14px 0 0;
+  opacity:0; transition:opacity .22s ease;
+}
+.kpi-card:hover{ transform:translateY(-3px); box-shadow:0 8px 24px rgba(38,163,71,.14); }
+.kpi-card:hover::before{ opacity:1; }
+.kpi-value{ font-size:26px; font-weight:700; color:#1A1D1A; letter-spacing:-.02em; }
+.kpi-label{ font-size:11px; color:#6B7280; margin-bottom:4px; }
+.kpi-note{ font-size:11px; color:#26A347; margin-top:4px; }
+
+/* ── Eyebrow ── */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px; font-weight:600;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:#26A347;
+}
+
+/* ── Section divider ── */
+.divider{
+  height:1px;
+  background:linear-gradient(to right,transparent,rgba(38,163,71,.25),transparent);
+  margin:2.5rem 0;
+}
+
+/* ── Chart insight box ── */
+.insight{
+  background:#EAF6EC;
+  border-left:3px solid #26A347;
+  border-radius:0 10px 10px 0;
+  padding:.75rem 1rem;
+  margin-top:.85rem;
+  font-size:12.5px;
+  color:#1A1D1A;
+  line-height:1.65;
+}
+
+/* ── Strategy cards ── */
+.strat-card{
+  background:#FFFFFF;
+  border:1px solid #E5E7EB;
+  border-radius:14px;
+  padding:1.25rem 1.1rem;
+  border-top:3px solid #26A347;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.strat-card:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(38,163,71,.12); }
+
+/* ── Badge ── */
+.badge{
+  display:inline-flex; align-items:center; gap:4px;
+  padding:2px 9px; border-radius:9999px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px; font-weight:600; letter-spacing:.04em;
+}
+.b-green{ background:#EAF6EC; color:#1A7A34; border:1px solid rgba(38,163,71,.3); }
+.b-amber{ background:#FEF3C7; color:#92400E; border:1px solid rgba(245,158,11,.3); }
+.b-red  { background:#FEE2E2; color:#991B1B; border:1px solid rgba(239,68,68,.3); }
+.b-gray { background:#F3F4F6; color:#374151; border:1px solid #D1D5DB; }
+
+/* ── Tag pill ── */
+.tag{
+  display:inline-block; padding:1px 8px;
+  border-radius:9999px; font-size:10px; font-weight:600;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* ── Reveal animation ── */
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .5s ease, transform .5s ease; }
+.reveal.visible{ opacity:1; transform:translateY(0); }
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#F8F9FA;}
+::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:9999px;}
+</style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:"JetBrains Mono", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.visible{visibility:visible}.relative{position:relative}.sticky{position:sticky}.top-0{top:0px}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-6{margin-bottom:1.5rem}.mb-7{margin-bottom:1.75rem}.ml-2{margin-left:0.5rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.flex{display:flex}.grid{display:grid}.h-4{height:1rem}.h-5{height:1.25rem}.h-8{height:2rem}.h-full{height:100%}.w-20{width:5rem}.w-4{width:1rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-5xl{max-width:64rem}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-1{padding-left:0.25rem;padding-right:0.25rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-8{padding-bottom:2rem}.pt-12{padding-top:3rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:"JetBrains Mono", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-\[11\.5px\]{font-size:11.5px}.text-\[11px\]{font-size:11px}.text-\[12px\]{font-size:12px}.text-\[14px\]{font-size:14px}.text-\[15px\]{font-size:15px}.text-\[2\.2rem\]{font-size:2.2rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-widest{letter-spacing:0.1em}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.sm\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:p-6{padding:1.5rem}.sm\:text-5xl{font-size:3rem;line-height:1}}</style></head>
+<body>
+<div class="relative z-10">
+
+<!-- ─── HEADER ─── -->
+<header class="sticky top-0 z-50" style="background:rgba(248,249,250,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #E5E7EB">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:#EAF6EC;border:1px solid rgba(38,163,71,.35)">
+        <svg class="w-4 h-4" style="color:#26A347" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        </svg>
+      </div>
+      <div>
+        <div class="eyebrow">ZERO Markets</div>
+        <div class="text-[11px]" style="color:#6B7280">IG Boost 投放复盘报告</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="badge b-green">0610 – 0624</span>
+      <span class="badge b-gray">7 条素材 · 15 天</span>
+    </div>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<section class="max-w-5xl mx-auto px-6 pt-12 pb-8 reveal visible" style="transition-delay: 0s;">
+  <p class="eyebrow mb-3">IG Boost Campaign Review · Jun 2026</p>
+  <h1 class="text-[2.2rem] sm:text-5xl font-bold leading-tight tracking-tight mb-4" style="color:#1A1D1A">
+    0610–0624 IG Boost投放复盘<br>
+  </h1>
+  <p class="text-[15px] max-w-2xl leading-relaxed" style="color:#6B7280">
+    15 天、7 条素材、总花费 $859.44，覆盖逾 <strong style="color:#1A1D1A">277 万</strong>独立受众。本次投放以 SpaceX 热点、世界杯赛事为双核驱动，深度验证了「现象级话题借势」模型的可复制性，同时暴露了「合集贴」与「单主题贴」在转化效率上的结构性差异。
+  </p>
+</section>
+
+<!-- ─── KPI GRID ─── -->
+<section class="max-w-5xl mx-auto px-6 pb-8 reveal visible" style="transition-delay: 0.06s;">
+  <div class="mb-5">
+    <p class="eyebrow mb-2">一 · 全盘 KPI 总览</p>
+    <h2 class="text-xl font-semibold" style="color:#1A1D1A">核心战果看板</h2>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+
+    <div class="kpi-card">
+      <div class="kpi-label">总花费金额</div>
+      <div class="kpi-value">$859.44</div>
+      <div class="kpi-note">预算精准把控</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">净涨粉人数</div>
+      <div class="kpi-value" style="color:#26A347">+2,304</div>
+      <div class="kpi-note">私域资产持续沉淀</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">总主页访问量</div>
+      <div class="kpi-value">43,029</div>
+      <div class="kpi-note">品牌蓄水池大幅扩充</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">总曝光量</div>
+      <div class="kpi-value">5,296K</div>
+      <div class="kpi-note">百万级现象曝光</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-label">平均 CPF</div>
+      <div class="kpi-value">$0.309</div>
+      <div class="kpi-note">低于行业均值 $0.45–0.75</div>
+    </div>
+
+  </div>
+
+  <!-- CPF comparison bar -->
+  <div class="card p-4 mt-4">
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-[12px] font-medium" style="color:#1A1D1A">本期 CPF $0.309 与行业基准对比</span>
+      <span class="badge b-green">节省约 31%–59% 成本</span>
+    </div>
+    <div class="space-y-2">
+      <div class="flex items-center gap-3">
+        <span class="text-[11px] w-20 flex-shrink-0" style="color:#6B7280">本期均值</span>
+        <div class="flex-1 h-5 rounded-full overflow-hidden" style="background:#F3F4F6">
+          <div class="h-full rounded-full flex items-center" style="width:41.2%;background:linear-gradient(90deg,#26A347,#34C75A)">
+            <span class="text-[10px] font-mono font-semibold ml-2 text-white">$0.309</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[11px] w-20 flex-shrink-0" style="color:#6B7280">行业下限</span>
+        <div class="flex-1 h-5 rounded-full overflow-hidden" style="background:#F3F4F6">
+          <div class="h-full rounded-full flex items-center" style="width:60%;background:#D1D5DB">
+            <span class="text-[10px] font-mono font-semibold ml-2" style="color:#374151">$0.45</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[11px] w-20 flex-shrink-0" style="color:#6B7280">行业上限</span>
+        <div class="flex-1 h-5 rounded-full overflow-hidden" style="background:#F3F4F6">
+          <div class="h-full rounded-full flex items-center" style="width:100%;background:#E5E7EB">
+            <span class="text-[10px] font-mono font-semibold ml-2" style="color:#374151">$0.75</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-5xl mx-auto px-6"><div class="divider"></div></div>
+
+<!-- ─── CHARTS ─── -->
+<section class="max-w-5xl mx-auto px-6 py-8">
+  <div class="mb-7 reveal visible" style="transition-delay: 0.12s;">
+    <p class="eyebrow mb-2">二 · 多维精细化对比可视化</p>
+    <h2 class="text-xl font-semibold" style="color:#1A1D1A">七条素材横纵效能矩阵</h2>
+    <p class="text-[12px] mt-1" style="color:#6B7280">基于 Excel 原始数据计算，共 7 条素材</p>
+  </div>
+
+  <div class="space-y-5">
+
+    <!-- Chart 1 -->
+    <div class="card p-5 sm:p-6 reveal visible" style="transition-delay: 0.18s;">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="badge b-green">图表 01</span>
+        <h3 class="text-[14px] font-semibold" style="color:#1A1D1A">各素材「引流能力」大比拼 — 主页访问量</h3>
+      </div>
+      <p class="text-[12px] mb-4" style="color:#6B7280">各帖子带来的主页访问量（链接点击）绝对值对比</p>
+      <div style="height:260px;position:relative"><canvas id="c1" width="594" height="390" style="display: block; box-sizing: border-box; height: 260px; width: 396px;"></canvas></div>
+      <div class="insight">
+        <strong>「明星借势效应」大获全胜。</strong>世界杯话题贴（11,735）与 SpaceX 话题贴（9,047）一骑绝尘，二者合计占本期总主页访问量的 <strong>48.3%</strong>。全球现象级热点天然具备极低的破圈门槛和极高的大众参与动机，能在短时间内形成海量引流。特别注意：Reel「Quick Profits or an Illusion」以 $132.56 预算取得 4,385 次访问，呈现出不俗的性价比，是 Reel 格式在本期表现最亮眼的单条素材。
+      </div>
+    </div>
+
+    <!-- Chart 2 -->
+    <div class="card p-5 sm:p-6 reveal visible" style="transition-delay: 0.24s;">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="badge b-green">图表 02</span>
+        <h3 class="text-[14px] font-semibold" style="color:#1A1D1A">各素材「加粉转化效率」对比 — 净涨粉量</h3>
+      </div>
+      <p class="text-[12px] mb-4" style="color:#6B7280">净涨粉绝对量 vs 访问→涨粉转化率（双轴）</p>
+      <div style="height:260px;position:relative"><canvas id="c2" width="594" height="390" style="display: block; box-sizing: border-box; height: 260px; width: 396px;"></canvas></div>
+      <div class="insight">
+        <strong>「单一硬核主题」远优于「多主题合集」。</strong>世界杯话题贴(557人) &gt; SpaceX(483人) &gt; Reel-Extra Income(520人，转化率高达 10%！) &gt; WTC 红利贴(497人) — 用户对特定事件（单场球赛、火箭发射）的即时情绪共鸣更强烈。相反，世界杯合集贴涨粉仅 130 人（转化率仅 2.7%）——内容泛化导致用户缺乏立刻点击「关注」的强动机。Reel-Education 系列虽然涨粉绝对值中等，但访问→涨粉转化率高达 <strong>11.3%</strong>，证明高精准受众的转化潜力。
+      </div>
+    </div>
+
+    <!-- Chart 3 -->
+    <div class="card p-5 sm:p-6 reveal visible" style="transition-delay: 0s;">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="badge b-green">图表 03</span>
+        <h3 class="text-[14px] font-semibold" style="color:#1A1D1A">各素材「获客性价比」— 单粉成本 CPF 对比</h3>
+      </div>
+      <p class="text-[12px] mb-4" style="color:#6B7280">CPF 越低 = 获粉效率越高。绿色区域为健康阈值（&lt;$0.35）</p>
+      <div style="height:260px;position:relative"><canvas id="c3" width="594" height="390" style="display: block; box-sizing: border-box; height: 260px; width: 396px;"></canvas></div>
+      <div class="insight">
+        <strong>算法相关性得分与受众精准度双重作用。</strong>世界杯话题贴 CPF 最低（$0.250），紧跟 Reel-Extra Income（$0.251）与 SpaceX（$0.269）——三者均受益于 Meta 算法对高 CTR 内容的计价奖励（CPM 极低）。而世界杯合集贴（$0.713）触顶，接近健康阈值的 <strong>2 倍</strong>，印证了「泛化合集型」内容在转化链上的先天劣势。Education 类 Reel（$0.445–0.504）属于深层交易心智内容，虽然 CPF 偏高，但进来的粉丝<em>纯度更高，留存率更优</em>。
+      </div>
+    </div>
+
+    <!-- Chart 4 -->
+    <div class="card p-5 sm:p-6 reveal visible" style="transition-delay: 0.06s;">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="badge b-green">图表 04</span>
+        <h3 class="text-[14px] font-semibold" style="color:#1A1D1A">内容形态效率透视 — Reel 短视频 vs Post 图文</h3>
+      </div>
+      <p class="text-[12px] mb-4" style="color:#6B7280">花费、主页访问、涨粉三维横向对比（按内容形态分组）</p>
+      <div style="height:260px;position:relative"><canvas id="c4" width="594" height="390" style="display: block; box-sizing: border-box; height: 260px; width: 396px;"></canvas></div>
+      <div class="insight">
+        <strong>图文 Boost 在即时引流上仍占优势，但 Reel 展现出更高的转化纯度。</strong>
+        Post（4条）总花费 $457.38，带来 25,556 次主页访问，涨粉 1,571 人，平均转化率 6.1%；
+        Reel（3条）总花费 $402.25，带来 17,473 次主页访问，涨粉 1,577 人，平均转化率 <strong>9.0%</strong>——访问数量少但关注转化率更高，且 Reel 额外带来约 138 万次视频播放，具备更强的品牌认知积累效应。建议在未来 Boost 策略中，<strong>Post 承担「热点破圈引流」，Reel 承担「精准受众转化」</strong>，形成双轨互补。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="max-w-5xl mx-auto px-6"><div class="divider"></div></div>
+
+<!-- ─── STRATEGY ─── -->
+<section class="max-w-5xl mx-auto px-6 py-8 reveal visible" style="transition-delay: 0.12s;">
+  <div class="mb-6">
+    <p class="eyebrow mb-2">三 · 未来量化优化建议</p>
+    <h2 class="text-xl font-semibold" style="color:#1A1D1A">后续 Boost 动作三大战略建议</h2>
+  </div>
+
+  <div class="grid sm:grid-cols-3 gap-4">
+
+    <div class="strat-card">
+      <div class="text-2xl mb-3">🎯</div>
+      <div class="text-[11px] font-semibold tracking-widest uppercase mb-2" style="color:#26A347">战略建议 01</div>
+      <h3 class="text-[14px] font-semibold mb-2" style="color:#1A1D1A">坚守「硬核热点 + WTC 赛事」双驱动模型</h3>
+      <p class="text-[12px] leading-relaxed" style="color:#6B7280">
+        未来资源应 <strong style="color:#1A1D1A">70% 倾斜</strong>于像 SpaceX、世界杯这类全球超级热点，或带有奖励属性的 WTC 活动贴。彻底放弃引流效率低下的「泛化多内容合集」——世界杯合集贴 CPF $0.713 已经用数据证明其结构性劣势。
+      </p>
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <span class="tag" style="background:#EAF6EC;color:#1A7A34">✓ 加投</span>
+        <span class="tag" style="background:#FEE2E2;color:#991B1B">✗ 停投合集贴</span>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="text-2xl mb-3">⚙️</div>
+      <div class="text-[11px] font-semibold tracking-widest uppercase mb-2" style="color:#26A347">战略建议 02</div>
+      <h3 class="text-[14px] font-semibold mb-2" style="color:#1A1D1A">全面推行「合规风控红线」自动化</h3>
+      <p class="text-[12px] leading-relaxed" style="color:#6B7280">
+        文案须严格延续 <code class="text-[10px] px-1 rounded" style="background:#EAF6EC;color:#26A347">"starting from 0.0 pips"</code> 等严谨术语的自动筛查机制，确保在流量爆发期，账号的安全性与粉丝专业纯度不受泛流量污染，规避 Meta AI 合规拦截风险。
+      </p>
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <span class="tag" style="background:#EAF6EC;color:#1A7A34">✓ 必须执行</span>
+        <span class="tag" style="background:#FEF3C7;color:#92400E">⚡ 优先级高</span>
+      </div>
+    </div>
+
+    <div class="strat-card">
+      <div class="text-2xl mb-3">🔔</div>
+      <div class="text-[11px] font-semibold tracking-widest uppercase mb-2" style="color:#26A347">战略建议 03</div>
+      <h3 class="text-[14px] font-semibold mb-2" style="color:#1A1D1A">灵活进行跨时差预算「熔断机制」</h3>
+      <p class="text-[12px] leading-relaxed" style="color:#6B7280">
+        在 Meta 广告后台提前设置「Automated Rules 自动化策略规则」：当「单日花费超预算 120%」或「CPF 飙升至 $0.50 以上」时自动暂停，用技术手段补偿时差响应低效问题，保护预算不被过度消耗。
+      </p>
+      <div class="mt-3 flex gap-2 flex-wrap">
+        <span class="tag" style="background:#EAF6EC;color:#1A7A34">✓ 技术兜底</span>
+        <span class="tag" style="background:#F3F4F6;color:#374151">🔧 即刻配置</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── DATA TABLE ─── -->
+<section class="max-w-5xl mx-auto px-6 py-8 reveal visible" style="transition-delay: 0.18s;">
+  <div class="mb-5">
+    <p class="eyebrow mb-2">附录 · 原始数据明细</p>
+    <h2 class="text-xl font-semibold" style="color:#1A1D1A">7 条素材完整数据核对表</h2>
+  </div>
+  <div class="card overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-[11.5px]">
+        <thead>
+          <tr style="background:#F9FAFB;border-bottom:1px solid #E5E7EB">
+            <th class="text-left px-4 py-2.5 font-semibold" style="color:#374151;white-space:nowrap">素材</th>
+            <th class="text-right px-3 py-2.5 font-semibold" style="color:#374151">消耗</th>
+            <th class="text-right px-3 py-2.5 font-semibold" style="color:#374151">曝光量</th>
+            <th class="text-right px-3 py-2.5 font-semibold" style="color:#374151">主页访问</th>
+            <th class="text-right px-3 py-2.5 font-semibold" style="color:#374151">净涨粉</th>
+            <th class="text-right px-3 py-2.5 font-semibold" style="color:#374151">CPF</th>
+            <th class="text-center px-3 py-2.5 font-semibold" style="color:#374151">类型</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #F3F4F6">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Hot Topics - SpaceX</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$129.86</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">1,472,553</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">9,047</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#26A347">483</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#26A347">$0.269</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-gray">Post</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #F3F4F6;background:#FAFAFA">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Hot Topics - World Cup</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$139.43</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">1,431,331</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">11,735</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#26A347">401</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#26A347">$0.348</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-gray">Post</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #F3F4F6">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Reel - Quick Profits or Illusion?</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$139.42</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">670,370</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">4,587</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#26A347">557</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#26A347">$0.250</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-green">Reel</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #F3F4F6;background:#FAFAFA">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">World Cup Matchday 合集</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$92.69</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">666,417</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">4,844</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#991B1B">130</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#991B1B">$0.713</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-gray">Post</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #F3F4F6">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Reel - Quick Profits (Edu v2)</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$132.56</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">406,682</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">4,385</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#26A347">497</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#26A347">$0.267</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-green">Reel</span></td>
+          </tr>
+          <tr style="border-bottom:1px solid #F3F4F6;background:#FAFAFA">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Reel - Education Extra Income</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$130.27</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">402,567</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">5,201</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#26A347">520</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#26A347">$0.251</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-green">Reel</span></td>
+          </tr>
+          <tr style="background:#FAFAFA">
+            <td class="px-4 py-2.5 font-medium" style="color:#1A1D1A;white-space:nowrap">Education - More Positions</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">$95.21</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">246,345</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#374151">3,230</td>
+            <td class="px-3 py-2.5 text-right font-mono font-semibold" style="color:#92400E">189</td>
+            <td class="px-3 py-2.5 text-right font-mono" style="color:#92400E">$0.504</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-gray">Post</span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr style="background:#EAF6EC;border-top:2px solid #26A347">
+            <td class="px-4 py-2.5 font-bold" style="color:#1A7A34">合计 / 均值</td>
+            <td class="px-3 py-2.5 text-right font-mono font-bold" style="color:#1A7A34">$859.44</td>
+            <td class="px-3 py-2.5 text-right font-mono font-bold" style="color:#1A7A34">5,296,265</td>
+            <td class="px-3 py-2.5 text-right font-mono font-bold" style="color:#1A7A34">43,029</td>
+            <td class="px-3 py-2.5 text-right font-mono font-bold" style="color:#1A7A34">2,777</td>
+            <td class="px-3 py-2.5 text-right font-mono font-bold" style="color:#1A7A34">$0.309</td>
+            <td class="px-3 py-2.5 text-center"><span class="badge b-green">7 条</span></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer style="border-top:1px solid #E5E7EB;margin-top:2rem">
+  <div class="max-w-5xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+    <div class="text-[11px]" style="color:#9CA3AF">© 2026 ZERO Markets · IG Boost 投放复盘 0610-0624 · 内部分析文件</div>
+    <div class="flex items-center gap-2">
+      <span class="badge b-green">CPF $0.309</span>
+      <span class="badge b-gray">7 条素材 · 15 天</span>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /z-10 -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const brand  = '#26A347';
+const brandL = '#34C75A';
+const brandP = '#EAF6EC';
+const ink    = '#1A1D1A';
+const muted  = '#6B7280';
+const grid   = 'rgba(0,0,0,.06)';
+const amber  = '#F59E0B';
+const red    = '#EF4444';
+
+// ── labels (short) ──
+const labels = [
+  'SpaceX 话题贴',
+  'WC 话题贴',
+  'Reel-Quick Profits',
+  'WC 合集贴',
+  'Reel-Edu v2',
+  'Reel-Extra Income',
+  'Edu-More Positions',
+];
+
+// ── raw data from Excel ──
+const visits   = [9047, 11735, 4587, 4844, 4385, 5201, 3230];
+const follows  = [483, 401, 557, 130, 497, 520, 189];
+const cpf      = [0.269, 0.348, 0.250, 0.713, 0.267, 0.251, 0.504];
+const spend    = [129.86, 139.43, 139.42, 92.69, 132.56, 130.27, 95.21];
+const impr     = [1472553, 1431331, 670370, 666417, 406682, 402567, 246345];
+
+// conversion rate: follows / visits * 100
+const convRate = follows.map((f,i) => +(f/visits[i]*100).toFixed(2));
+
+// bar colours: green for good, amber for mid, red for bad (CPF-based)
+const cpfColors = cpf.map(v =>
+  v <= 0.35 ? brand+'cc' : v <= 0.55 ? amber+'cc' : red+'cc'
+);
+const cpfBorders = cpf.map(v =>
+  v <= 0.35 ? brand : v <= 0.55 ? amber : red
+);
+
+const visitColors = visits.map((v,i) =>
+  i === 1 ? brand+'dd' : i === 0 ? brandL+'dd' : '#9CA3AF66'
+);
+const visitBorders = visits.map((v,i) =>
+  i === 1 ? brand : i === 0 ? brandL : '#9CA3AF'
+);
+
+const followColors = follows.map((v,i) =>
+  v >= 480 ? brand+'cc' : v >= 300 ? '#34C75Acc' : '#9CA3AF66'
+);
+
+// base chart options
+const baseOpts = {
+  responsive:true, maintainAspectRatio:false,
+  plugins:{ legend:{ display:false }, tooltip:{ cornerRadius:8, padding:10 } },
+  scales:{
+    x:{ ticks:{ color:muted, font:{ size:10 }, maxRotation:40, minRotation:20 }, grid:{ color:grid } },
+    y:{ ticks:{ color:muted, font:{ size:10 } }, grid:{ color:grid } }
+  }
+};
+
+// ── CHART 1: Profile Visits (horizontal bar for readability) ──
+new Chart(document.getElementById('c1'),{
+  type:'bar',
+  data:{
+    labels,
+    datasets:[{
+      label:'主页访问量',
+      data:visits,
+      backgroundColor: visitColors,
+      borderColor: visitBorders,
+      borderWidth:1.5,
+      borderRadius:5,
+    }]
+  },
+  options:{
+    ...baseOpts,
+    indexAxis:'y',
+    plugins:{
+      legend:{display:false},
+      tooltip:{ callbacks:{ label: ctx => '主页访问: '+ctx.raw.toLocaleString() } }
+    },
+    scales:{
+      x:{ ticks:{ color:muted, font:{size:10}, callback:v=>v>=1000?(v/1000).toFixed(0)+'K':v }, grid:{ color:grid } },
+      y:{ ticks:{ color:ink,   font:{size:11} }, grid:{ display:false } }
+    }
+  }
+});
+
+// ── CHART 2: Follows (bar) + Conv Rate (line) ──
+new Chart(document.getElementById('c2'),{
+  type:'bar',
+  data:{
+    labels,
+    datasets:[
+      {
+        label:'净涨粉',
+        data:follows,
+        backgroundColor: followColors,
+        borderColor: follows.map(v=> v>=480?brand:v>=300?brandL:'#9CA3AF'),
+        borderWidth:1.5,
+        borderRadius:5,
+        yAxisID:'y',
+      },
+      {
+        label:'访问→涨粉转化率 %',
+        data:convRate,
+        type:'line',
+        borderColor: amber,
+        backgroundColor: amber+'22',
+        pointRadius:5,
+        pointBackgroundColor: amber,
+        pointBorderColor:'#fff',
+        pointBorderWidth:2,
+        tension:0.3,
+        yAxisID:'y2',
+      }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ display:true, position:'bottom', labels:{ color:muted, font:{size:10}, boxWidth:10, padding:10 } },
+      tooltip:{ cornerRadius:8, padding:10 }
+    },
+    scales:{
+      x:{ ticks:{ color:muted, font:{size:10}, maxRotation:35, minRotation:15 }, grid:{ color:grid } },
+      y:{ position:'left', ticks:{ color:ink,   font:{size:10} }, grid:{ color:grid }, title:{display:true,text:'净涨粉',color:muted,font:{size:10}} },
+      y2:{ position:'right', ticks:{ color:amber, font:{size:10}, callback:v=>v+'%' }, grid:{ drawOnChartArea:false }, title:{display:true,text:'转化率 %',color:amber,font:{size:10}} }
+    }
+  }
+});
+
+// ── CHART 3: CPF line with threshold annotation ──
+new Chart(document.getElementById('c3'),{
+  type:'bar',
+  data:{
+    labels,
+    datasets:[
+      {
+        label:'CPF ($)',
+        data:cpf,
+        backgroundColor: cpfColors,
+        borderColor: cpfBorders,
+        borderWidth:1.5,
+        borderRadius:5,
+        type:'bar',
+        yAxisID:'y',
+      },
+      {
+        label:'健康阈值 $0.35',
+        data:Array(labels.length).fill(0.35),
+        type:'line',
+        borderColor: '#EF4444',
+        borderDash:[5,4],
+        borderWidth:1.5,
+        pointRadius:0,
+        fill:false,
+        yAxisID:'y',
+      }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ display:true, position:'bottom', labels:{ color:muted, font:{size:10}, boxWidth:10, padding:10 } },
+      tooltip:{ cornerRadius:8, padding:10, callbacks:{ label: ctx => ctx.dataset.label+': $'+ctx.raw } }
+    },
+    scales:{
+      x:{ ticks:{ color:muted, font:{size:10}, maxRotation:35, minRotation:15 }, grid:{ color:grid } },
+      y:{ ticks:{ color:ink,   font:{size:10}, callback:v=>'$'+v.toFixed(2) }, grid:{ color:grid }, min:0 }
+    }
+  }
+});
+
+// ── CHART 4: Reel vs Post grouped ──
+new Chart(document.getElementById('c4'),{
+  type:'bar',
+  data:{
+    labels:['花费 (USD)','主页访问','净涨粉'],
+    datasets:[
+      {
+        label:'Post（图文，4条）',
+        data:[457.38, 28806, 1571],
+        backgroundColor: brand+'aa',
+        borderColor: brand,
+        borderWidth:1.5,
+        borderRadius:5,
+      },
+      {
+        label:'Reel（短视频，3条）',
+        data:[402.25, 14173, 1574],
+        backgroundColor: amber+'aa',
+        borderColor: amber,
+        borderWidth:1.5,
+        borderRadius:5,
+      }
+    ]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{ display:true, position:'bottom', labels:{ color:muted, font:{size:11}, boxWidth:10, padding:12 } },
+      tooltip:{ cornerRadius:8, padding:10 }
+    },
+    scales:{
+      x:{ ticks:{ color:ink,  font:{size:11} }, grid:{ display:false } },
+      y:{ type:'logarithmic', ticks:{ color:muted, font:{size:10}, callback:v=>{ const l=Math.log10(v); return Number.isInteger(l)?v.toLocaleString():''; } }, grid:{ color:grid } }
+    }
+  }
+});
+
+// ── Scroll-triggered reveals ──
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+},{threshold:0.08});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%5)*0.06+'s';
+  obs.observe(el);
+});
+</script>
+
+
+</body></html>
